@@ -18,11 +18,19 @@ namespace TrelloClone.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(UserLoginData _userLoginData)
         {
+            string email = _userLoginData.email;
+            string password = _userLoginData.password;
+
+            //beírta a login adatokat a formba.
+            UserAuthController userAuthController = new UserAuthController();
+            User CurrentUser = userAuthController.LoginUser(email, password);
+
+
+
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();
