@@ -1,16 +1,16 @@
-﻿@model TrelloClone.Models.UserLoginData
+﻿@model TrelloClone.Models.UserRegData
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Registration";
 }
 
-<h1>Log in</h1>
+<h1>Registration</h1>
 
-<h4>UserLoginData</h4>
+<h4>UserRegData</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Index">
+        <form asp-action="Registration">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="email" class="control-label"></label>
@@ -23,11 +23,27 @@
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Log in" class="btn btn-primary" />
+                <label asp-for="passwordConfirm" class="control-label"></label>
+                <input asp-for="passwordConfirm" class="form-control" />
+                <span asp-validation-for="passwordConfirm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+
+
+@if (ViewData["RegSuccess"].Equals("1"))
+{
+    <p>Registration successful</p>
+}
+else
+{
+    <p>@ViewData["RegSuccess"]</p>
+}
+
 
 <div>
     <a asp-action="Index">Back to List</a>

@@ -31,6 +31,24 @@ namespace TrelloClone.Controllers
 
             return View();
         }
+
+        public IActionResult Registration(UserRegData _userRegData)
+        {
+            //TODO proper error messages 
+            string email = _userRegData.email;
+            string password = _userRegData.password;
+            string passwordConfirm = _userRegData.passwordConfirm;
+
+            UserAuthController userAuthController = new UserAuthController();
+            string success = userAuthController.RegistrationUser(email, password);
+
+            ViewData["RegSuccess"] = success;
+
+            return View();
+        }
+
+
+
         public IActionResult Privacy()
         {
             return View();

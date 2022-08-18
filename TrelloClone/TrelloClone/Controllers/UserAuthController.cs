@@ -28,5 +28,24 @@ namespace TrelloClone.Controllers
                 currentUser = JsonConvert.DeserializeObject<User>(result);
                 return currentUser;
         }
+
+        public string RegistrationUser(string _email, string _password)
+        {
+            using var client = new HttpClient();
+            UserLoginData _userLoginData = new UserLoginData();
+            _userLoginData.email = _email;
+            _userLoginData.password = _password;
+
+            var endpoint = new Uri("http://79.172.201.168/Authentication/SignUp");
+            var userRegRequest = JsonConvert.SerializeObject(_userLoginData);
+            var payLoad = new StringContent(content: userRegRequest, encoding: Encoding.UTF8, mediaType: "application/json");
+            var result = client.PostAsync(endpoint, payLoad).Result;
+            var resultText = result.Content.ReadAsStringAsync().Result;
+            var resultCode = result.IsSuccessStatusCode;
+
+            var responseText = resultCode ? "1" : resultText;
+
+            return responseText;
+        }
     }
 }
