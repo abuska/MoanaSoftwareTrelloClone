@@ -18,7 +18,7 @@ namespace TrelloClone.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(UserLoginData _userLoginData)
+        public IActionResult Login(UserLoginData _userLoginData)
         {
             string email = _userLoginData.email;
             string password = _userLoginData.password;
@@ -39,11 +39,29 @@ namespace TrelloClone.Controllers
             string password = _userRegData.password;
             string passwordConfirm = _userRegData.passwordConfirm;
 
+            
             UserAuthController userAuthController = new UserAuthController();
             string success = userAuthController.RegistrationUser(email, password);
 
             ViewData["RegSuccess"] = success;
 
+            return View();
+        }
+
+
+        public IActionResult Dashboard(UserRegData _userRegData)
+        {
+           /* //TODO proper error messages 
+            string email = _userRegData.email;
+            string password = _userRegData.password;
+            string passwordConfirm = _userRegData.passwordConfirm;
+
+
+            UserAuthController userAuthController = new UserAuthController();
+            string success = userAuthController.RegistrationUser(email, password);
+
+            ViewData["RegSuccess"] = success;
+           */
             return View();
         }
 
