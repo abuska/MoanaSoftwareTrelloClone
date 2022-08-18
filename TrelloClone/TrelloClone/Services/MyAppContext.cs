@@ -10,6 +10,7 @@ namespace TrelloClone.Services
     {
         private static IHttpContextAccessor _httpContextAccessor;
         private static User _CurrentUser;
+        private static List<User> _UserList;
         private static List<Card> _CardList;
 
         public static void Configure(IHttpContextAccessor httpContextAccessor)
@@ -25,6 +26,16 @@ namespace TrelloClone.Services
         {
             return _CurrentUser;
         }
+
+        public static void setUserList(List<User> UserList)
+        {
+            _UserList = UserList;
+        }
+        public static List<User> getUserList()
+        {
+            return _UserList;
+        }
+
         public static void setCardList(List<Card> CardList)
         {
             _CardList = CardList;

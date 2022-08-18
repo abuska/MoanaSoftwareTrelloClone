@@ -11,5 +11,9 @@ namespace TrelloClone.Models
         public string description { get; set; }
         public int status { get; set; }
         public int position { get; set; }
+        public string createdAt { get; set; }
+        public string modifiedAt { get; set; }
+        public string ownerId { get; set; }
+        public string asigneeId { get; set; }
     }
 }

@@ -1,7 +1,51 @@
 ﻿
+
+
+@using TrelloClone.Services;
+
+
+
 @{
     ViewData["Title"] = "Dashboard";
+    MyAppContext.getCardList();
 }
 
 <h1>Dashboard</h1>
-
+<div style=" flex-direction: row;">
+    <div style="background-color:grey;">
+        <h3>
+            0 pending
+        </h3>
+        @foreach (Card card in MyAppContext.getCardList().FindAll(e => e.status == 0))
+        {
+            <div>@card.id</div>
+        }
+    </div>
+    <div style="background-color:grey;">
+        <h3>
+            1 in progress
+        </h3>
+        @foreach (Card card in MyAppContext.getCardList().FindAll(e => e.status == 1))
+        {
+            <div>@card.id</div>
+        }
+    </div>
+    <div style="background-color:grey;">
+        <h3>
+            2 blocked
+        </h3>
+        @foreach (Card card in MyAppContext.getCardList().FindAll(e => e.status == 2))
+        {
+            <div>@card.id</div>
+        }
+    </div>
+    <div style="background-color:grey;">
+        <h3>
+            3 done
+        </h3>
+        @foreach (Card card in MyAppContext.getCardList().FindAll(e => e.status == 3))
+        {
+            <div>@card.id</div>
+        }
+    </div>
+</div>

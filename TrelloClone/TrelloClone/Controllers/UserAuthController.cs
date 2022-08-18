@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using TrelloClone.Models;
@@ -48,6 +49,22 @@ namespace TrelloClone.Controllers
             var responseText = resultCode ? "1" : resultText;
 
             return responseText;
+        }
+
+
+        public void GetAllUsers()
+        {
+            var endpoint = new Uri("http://79.172.201.168/Users/GetAll");
+            using (var request = new HttpRequestMessage(HttpMethod.Get, endpoint))
+            {
+                using var client = new HttpClient();
+                string currentUserToken = MyAppContext.getUserData().token;
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", currentUserToken);
+                var result = client.SendAsync(request).Result.Content.ReadAsStringAsync().Result;
+
+                List<User> UserList = JsonConvert.DeserializeObject<List<User>>(result);
+
+            }
         }
     }
 }
