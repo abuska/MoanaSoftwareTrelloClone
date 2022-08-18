@@ -21,7 +21,6 @@ namespace TrelloClone.Controllers
 
         public IActionResult Login(UserLoginData _userLoginData)
         {
-            User UserTestData = MyAppContext.getUserData();
             if (MyAppContext.getUserData() == null &&
                 _userLoginData.email !=null &&
                 _userLoginData.password != null
@@ -33,15 +32,16 @@ namespace TrelloClone.Controllers
 
                 UserAuthController userAuthController = new UserAuthController();
                 userAuthController.LoginUser(email, password);
-
-                UserTestData = MyAppContext.getUserData();
   
                 if (MyAppContext.getUserData().token != null)
                 {
                     CardController cc = new CardController();
                     cc.GetAllCardsOfUser();
-                    List<Card> cardTestList = MyAppContext.getCardList();
                 }
+
+                //todo navigate to dashboard from here
+                return Redirect("~/Home/Dashboard");
+
 
             }
             return View();
