@@ -13,7 +13,7 @@ namespace TrelloClone.Controllers
 {
     public class UserAuthController
     {
-        public User LoginUser(string _email, string _password)
+        public void LoginUser(string _email, string _password)
         {
 
             User currentUser = new User();
@@ -29,8 +29,6 @@ namespace TrelloClone.Controllers
 
             currentUser = JsonConvert.DeserializeObject<User>(result);
             MyAppContext.setUserData(currentUser);
-            
-            return currentUser;
         }
 
         public string RegistrationUser(string _email, string _password)

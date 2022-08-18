@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using TrelloClone.Models;
+using TrelloClone.Services;
 
 namespace TrelloClone.Controllers
 {
@@ -20,15 +21,29 @@ namespace TrelloClone.Controllers
 
         public IActionResult Login(UserLoginData _userLoginData)
         {
-            string email = _userLoginData.email;
-            string password = _userLoginData.password;
+            User UserTestData = MyAppContext.getUserData();
+            if (MyAppContext.getUserData() == null &&
+                _userLoginData.email !=null &&
+                _userLoginData.password != null
+                )
+            {
+                
+                string email = _userLoginData.email;
+                string password = _userLoginData.password;
 
-            //beírta a login adatokat a formba.
-            UserAuthController userAuthController = new UserAuthController();
-            User CurrentUser = userAuthController.LoginUser(email, password);
+                UserAuthController userAuthController = new UserAuthController();
+                userAuthController.LoginUser(email, password);
 
+                UserTestData = MyAppContext.getUserData();
+  
+                if (MyAppContext.getUserData().token != null)
+                {
+                    CardController cc = new CardController();
+                    cc.GetAllCardsOfUser();
+                    List<Card> cardTestList = MyAppContext.getCardList();
+                }
 
-
+            }
             return View();
         }
 

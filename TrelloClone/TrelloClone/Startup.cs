@@ -52,7 +52,7 @@ namespace TrelloClone
             app.UseSession();
 
             var ctx = app.ApplicationServices.GetRequiredService<IHttpContextAccessor>();
-            TrelloClone.Services.MyAppContext.Configure(ctx);
+            Services.MyAppContext.Configure(ctx);
 
 
             app.UseEndpoints(endpoints =>

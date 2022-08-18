@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrelloClone.Models;
@@ -9,6 +10,7 @@ namespace TrelloClone.Services
     {
         private static IHttpContextAccessor _httpContextAccessor;
         private static User _CurrentUser;
+        private static List<Card> _CardList;
 
         public static void Configure(IHttpContextAccessor httpContextAccessor)
         {
@@ -23,7 +25,14 @@ namespace TrelloClone.Services
         {
             return _CurrentUser;
         }
-
+        public static void setCardList(List<Card> CardList)
+        {
+            _CardList = CardList;
+        }
+        public static List<Card> getCardList()
+        {
+            return _CardList;
+        }
 
         public static HttpContext CurrentHttpContext { get { return _httpContextAccessor.HttpContext; } }
     }
