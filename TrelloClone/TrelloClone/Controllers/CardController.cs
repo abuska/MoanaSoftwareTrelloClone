@@ -69,7 +69,9 @@ namespace TrelloClone.Controllers
         public string CreateCardAPI(string _title, string _description)
         {
             using var client = new HttpClient();
-            Card newCard = new Card();
+            string currentUserToken = MyAppContext.getUserData().token;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", currentUserToken);
+            CardCreateRequestBody newCard = new CardCreateRequestBody();
             newCard.title = _title;
             newCard.description = _description;
 
@@ -111,7 +113,11 @@ namespace TrelloClone.Controllers
         public string UpdateCardAPI(string _id, string _title, string _description, int _status, int _position, string _asigneeId)
         {
             using var client = new HttpClient();
-            Card newCard = new Card();
+
+            string currentUserToken = MyAppContext.getUserData().token;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", currentUserToken);
+
+            CarUpdateRequestBody newCard = new CarUpdateRequestBody();
             newCard.id = _id;
             newCard.title = _title;
             newCard.description = _description;
@@ -159,6 +165,10 @@ namespace TrelloClone.Controllers
         public string DeleteCardAPI(string _id)
         {
             using var client = new HttpClient();
+
+            string currentUserToken = MyAppContext.getUserData().token;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", currentUserToken);
+
             Card deleteCard = new Card();
             deleteCard.id = _id;
 

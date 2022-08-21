@@ -4,50 +4,46 @@
     ViewData["Title"] = "Registration";
 }
 
-<h1>Registration</h1>
-
-<h4>UserRegData</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Registration">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="email" class="control-label"></label>
-                <input asp-for="email" class="form-control" />
-                <span asp-validation-for="email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" />
-                <span asp-validation-for="password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="passwordConfirm" class="control-label"></label>
-                <input asp-for="passwordConfirm" class="form-control" />
-                <span asp-validation-for="passwordConfirm" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<body style="background-image: linear-gradient(70deg, #7c52d1, #e060ad); ">
+    <div style="background-color: white; margin-left: 25%; margin-right: 25%; width: 50%; margin-top: 10%; padding: 10px; border-radius: 10px; ">
+        <div>
+            <form asp-action="Registration">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="email" class="control-label"></label>
+                    <input asp-for="email" class="form-control" />
+                    <span asp-validation-for="email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="password" class="control-label"></label>
+                    <input asp-for="password" class="form-control" />
+                    <span asp-validation-for="password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="passwordConfirm" class="control-label"></label>
+                    <input asp-for="passwordConfirm" class="form-control" />
+                    <span asp-validation-for="passwordConfirm" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Registration" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+    @if (ViewData["RegSuccess"].Equals("1"))
+    {
+        <p>Registration successful</p>
+    }
+    else
+    {
+        <p>@ViewData["RegSuccess"]</p>
+    }
+</body>
 
 
-@if (ViewData["RegSuccess"].Equals("1"))
-{
-    <p>Registration successful</p>
-}
-else
-{
-    <p>@ViewData["RegSuccess"]</p>
-}
 
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

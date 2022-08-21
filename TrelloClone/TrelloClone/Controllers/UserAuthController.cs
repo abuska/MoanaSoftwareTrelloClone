@@ -51,8 +51,7 @@ namespace TrelloClone.Controllers
             return responseText;
         }
 
-
-        public void GetAllUsers()
+        public string GetAllUsersAPI()
         {
             var endpoint = new Uri("http://79.172.201.168/Users/GetAll");
             using (var request = new HttpRequestMessage(HttpMethod.Get, endpoint))
@@ -62,9 +61,14 @@ namespace TrelloClone.Controllers
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", currentUserToken);
                 var result = client.SendAsync(request).Result.Content.ReadAsStringAsync().Result;
 
-                List<User> UserList = JsonConvert.DeserializeObject<List<User>>(result);
-
+                return result;
             }
+        }
+
+
+        public void GetAllUsers()
+        {
+            List<User> UserList = JsonConvert.DeserializeObject<List<User>>(GetAllUsersAPI());
         }
     }
 }

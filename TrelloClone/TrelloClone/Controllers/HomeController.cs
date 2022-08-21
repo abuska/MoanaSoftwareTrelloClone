@@ -66,17 +66,19 @@ namespace TrelloClone.Controllers
 
         public IActionResult Dashboard(UserRegData _userRegData)
         {
-           /* //TODO proper error messages 
-            string email = _userRegData.email;
-            string password = _userRegData.password;
-            string passwordConfirm = _userRegData.passwordConfirm;
+            /* //TODO proper error messages 
+             string email = _userRegData.email;
+             string password = _userRegData.password;
+             string passwordConfirm = _userRegData.passwordConfirm;
 
 
-            UserAuthController userAuthController = new UserAuthController();
-            string success = userAuthController.RegistrationUser(email, password);
+             UserAuthController userAuthController = new UserAuthController();
+             string success = userAuthController.RegistrationUser(email, password);
 
-            ViewData["RegSuccess"] = success;
-           */
+             ViewData["RegSuccess"] = success;
+            */
+            CardController CC = new CardController();
+            CC.GetAllCardsOfUser();
             return View();
         }
 

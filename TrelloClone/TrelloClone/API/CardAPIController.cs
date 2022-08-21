@@ -30,18 +30,15 @@ namespace TrelloClone.API
 
         // POST api/<CardAPIController>
         [HttpPost]
-        public OkResult Post([FromBody] Models.CardCreateRequestBody card)
+        public OkObjectResult Post([FromBody] Models.CardCreateRequestBody card)
         {
-            return Ok();
-          /*  return card.title + card.description;
             CardController CC = new CardController();
-           
-            return CC.CreateCardAPI(card.title, card.description);*/
+            return Ok(CC.CreateCardAPI(card.title, card.description));
         }
 
         // PUT api/<CardAPIController>/5
         [HttpPut("{id}")]
-        public string Put([FromBody] Models.Card card)
+        public string Put([FromBody] Models.CarUpdateRequestBody card)
         {
             CardController CC = new CardController();
             return CC.UpdateCardAPI(card.id, card.title, card.description, card.status, card.position, card.asigneeId);
