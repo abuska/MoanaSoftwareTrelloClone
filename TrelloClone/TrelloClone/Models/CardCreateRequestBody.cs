@@ -8,6 +8,7 @@ namespace TrelloClone.Models
     {
         public string title { get; set; }
         public string description { get; set; }
-     
+        public int status { get; set; }
+
     }
 }

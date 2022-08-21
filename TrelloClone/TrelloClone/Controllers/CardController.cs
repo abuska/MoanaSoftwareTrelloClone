@@ -66,7 +66,7 @@ namespace TrelloClone.Controllers
         }
 
 
-        public string CreateCardAPI(string _title, string _description)
+        public string CreateCardAPI(string _title, string _description, int _status)
         {
             using var client = new HttpClient();
             string currentUserToken = MyAppContext.getUserData().token;
@@ -74,6 +74,7 @@ namespace TrelloClone.Controllers
             CardCreateRequestBody newCard = new CardCreateRequestBody();
             newCard.title = _title;
             newCard.description = _description;
+            newCard.status = _status;
 
             var endpoint = new Uri("http://79.172.201.168/Cards/Add");
             var newCardRequest = JsonConvert.SerializeObject(newCard);
@@ -87,15 +88,17 @@ namespace TrelloClone.Controllers
             List<Card> cardList = JsonConvert.DeserializeObject<List<Card>>(allCards);
             Card LastCard = cardList.Last();
 
-            return JsonConvert.SerializeObject(LastCard);
+
+            return GetCardDetailsAPI(LastCard.id);
         }
 
-        public void CreateCard(string _title, string _description)
+        public void CreateCard(string _title, string _description, int _status)
         {
             using var client = new HttpClient();
             Card newCard = new Card();
             newCard.title = _title;
             newCard.description = _description;
+            newCard.status = _status;
 
             var endpoint = new Uri("http://79.172.201.168/Cards/Add");
             var newCardRequest = JsonConvert.SerializeObject(newCard);
@@ -133,8 +136,7 @@ namespace TrelloClone.Controllers
 
             var allCards = GetAllCardsOfUserAPI();
             List<Card> cardList = JsonConvert.DeserializeObject<List<Card>>(allCards);
-            Card LastCard = cardList.Last();
-
+            Card LastCard = cardList.Find(x => x.id == _id);
             return JsonConvert.SerializeObject(LastCard);
         }
 

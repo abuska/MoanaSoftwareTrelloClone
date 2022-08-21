@@ -33,7 +33,7 @@ namespace TrelloClone.API
         public OkObjectResult Post([FromBody] Models.CardCreateRequestBody card)
         {
             CardController CC = new CardController();
-            return Ok(CC.CreateCardAPI(card.title, card.description));
+            return Ok(CC.CreateCardAPI(card.title, card.description, card.status));
         }
 
         // PUT api/<CardAPIController>/5
