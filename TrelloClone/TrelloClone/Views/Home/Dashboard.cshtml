@@ -137,7 +137,7 @@
                 <partial name="_Card.cshtml" model="card" />
             }
             <div style="padding: 5px">
-                <input type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
+                <input onclick="Add(0)" type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
             </div>
         </div>
 
@@ -150,7 +150,7 @@
                 <partial name="_Card.cshtml" model="card" />
             }
             <div style="padding: 5px">
-                <input type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
+                <input onclick="Add(0)" type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
             </div>
         </div>
         <div style="background-color: #d1d1d1; width: 24%; padding: 10px; border-radius: 10px; height: fit-content; ">
@@ -162,7 +162,7 @@
                 <partial name="_Card.cshtml" model="card" />
             }
             <div style="padding: 5px">
-                <input type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
+                <input onclick="Add(0)" type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
             </div>
         </div>
         <div style="background-color: #d1d1d1; width: 24%; padding: 10px; border-radius: 10px; height: fit-content; ">
@@ -174,14 +174,14 @@
                 <partial name="_Card.cshtml" model="card" />
             }
             <div style="padding: 5px">
-                <input type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
+                <input onclick="Add(0)" type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
             </div>
         </div>
 
     </div>
 
 
-    <form>
+    <form id="cardDetailsForm">
         <input type="hidden" name="id" value="" />
         <input type="text" name="title" value="" />
         <input type="text" name="description" value="" />
@@ -205,8 +205,8 @@
                     JSON.parse(JSON.parse(data)).forEach(
                         row =>
                             $('#asigneeid').append(`<option value="${row.id}">
-                                           ${row.email}
-                                      </option>`)
+                                               ${row.email}
+                                          </option>`)
                     )
                 },
                 contentType: "application/json; charset=utf-8",
@@ -215,9 +215,17 @@
         });
     </script>
 
+    <form id="newCardForm">
+        <input type="text" name="title" value="" />
+        <input type="text" name="description" value="" />
+
+        <input type="button" name="" value="Submit" />
+    </form>
+
+
     <div id="detailsModalwindow" style="display: none">
 
 
     </div>
     <div id="deleteModalwindow" style="display: none">this</div>
-    </body>
+</body>
