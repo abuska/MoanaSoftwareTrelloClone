@@ -181,21 +181,6 @@
     </div>
 
 
-    <form id="cardDetailsForm" style="display:none;">
-        <input id="cardDetailID" type="hidden" name="id" value="" />
-        <input id="cardDetailTitle" type="text" name="title" value="" />
-        <input id="cardDetailDescription" type="text" name="description" value="" />
-        <select id="cardDetailStatus" name="status" id="statuses">
-            <option value="0">Pending</option>
-            <option value="1">In Progress</option>
-            <option value="2">Blocked</option>
-            <option value="3">Done</option>
-        </select>
-        <input id="cardDetailPosition" type="number" name="position" value="" />
-        <select id="cardDetailAsigneeId" name="asigneeid" id="asigneeid">
-        </select>
-        <input type="button" onclick="submitDetailsForm();" value="Submit" />
-    </form>
 
     <script>
         $(document).ready(function () {
@@ -206,8 +191,8 @@
                     JSON.parse(JSON.parse(data)).forEach(
                         row =>
                             $('#cardDetailAsigneeId').append(`<option value="${row.id}">
-                                                       ${row.email}
-                                                  </option>`)
+                                                           ${row.email}
+                                                      </option>`)
                     )
                 },
                 contentType: "application/json; charset=utf-8",
@@ -218,6 +203,70 @@
 
 
 
+
+
+
+
+
+    <!--DETAILS -->
+    <div id="cardDetailsForm" style="position: absolute; background-color: rgba(0,0,0,0.5); width: 100%; height: 100%; top: 0; left: 0; display: none; justify-content: center;">
+        <div style="background-color: white; width: fit-content; height: fit-content; border-radius: 10px; padding: 50px; margin-top: 100px; display: flex; align-content: center; justify-content: center; ">
+            <form>
+                <input type="hidden" name="id" id="cardDetailID" value="" />
+                <div style="font-size: 20px; margin-bottom: 20px">
+                    Details
+                </div>
+                <div style="margin-bottom: 20px">
+                    <div>Title</div>
+                    <input type="text" name="title" id="cardDetailTitle" value="" style="width: 100%;" />
+                </div>
+                <div style="margin-bottom: 20px">
+                    <div>Description</div>
+                    <input type="text" name="description" id="cardDetailDescription" value="" style="width: 100%;" />
+                </div>
+                <div style="margin-bottom: 20px; width: 100%;">
+                    <div>Status</div>
+                    <select name="status"id="cardDetailStatus">
+                        <option value="0">Pending</option>
+                        <option value="1">In Progress</option>
+                        <option value="2">Blocked</option>
+                        <option value="3">Done</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 20px">
+                    <div>Position</div>
+                    <input type="number" name="position" id="cardDetailPosition" value="" style="width: 100%;" />
+                </div>
+                <div style="margin-bottom: 20px">
+                    <div>Assigee Id</div>
+                    <select name="asigneeid" id="cardDetailAsigneeId" style="width: 100%;">
+                    </select>
+                </div>
+                <div style="padding-top: 25px; justify-content: center; align-items: center; display: flex;">
+                    <input type="button" name="" onclick="submitDetailForm();" value="Submit" style="width: 100%; padding: 5px; margin: 5px" />
+                    <input type="button" name="" onclick="hideDetailForm();" value="Cancel" style="width: 100%; padding: 5px; margin: 5px" />
+                </div>
+            </form>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    type: "Get",
+                    url: "../API/User/all",
+                    success: function (data) {
+                        JSON.parse(JSON.parse(data)).forEach(
+                            row =>
+                                $('#asigneeid').append(`<option value="${row.id}">
+                                                                        ${row.email}
+                                                                    </option>`)
+                        )
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    datatype: 'json'
+                });
+            });
+        </script>
+    </div>
     <script>
         function prepareDetailForm(cardID) {
             $.get("../API/Card/" + cardID, function (data) {
@@ -235,75 +284,28 @@
             });
         }
         function hideDetailForm() {
-            document.getElementById("newCardForm").style.display = "none";
             document.getElementById("cardDetailsForm").style.display = "none";
         }
 
-    </script>
-
-
-
-
-    <!--DETAILS -->
-    <div id="cardDetailsForm" style="position: absolute; background-color: rgba(0,0,0,0.5); width: 100%; height: 100%; top: 0; left: 0; display: none; justify-content: center;">
-        <div style="background-color: white; width: fit-content; height: fit-content; border-radius: 10px; padding: 50px; margin-top: 100px; display: flex; align-content: center; justify-content: center; ">
-            <form >
-                <input type="hidden" name="id" value="" />
-                <div style="font-size: 20px; margin-bottom: 20px">
-                    Details
-                </div>
-                <div style="margin-bottom: 20px">
-                    <div>Title</div>
-                    <input type="text" name="title" value="" style="width: 100%;" />
-                </div>
-                <div style="margin-bottom: 20px">
-                    <div>Description</div>
-                    <input type="text" name="description" value="" style="width: 100%;" />
-                </div>
-                <div style="margin-bottom: 20px; width: 100%;">
-                    <div>Status</div>
-                    <select name="status" id="statuses">
-                        <option value="0">Pending</option>
-                        <option value="1">In Progress</option>
-                        <option value="2">Blocked</option>
-                        <option value="3">Done</option>
-                    </select>
-                </div>
-                <div style="margin-bottom: 20px">
-                    <div>Position</div>
-                    <input type="number" name="position" value="" style="width: 100%;" />
-                </div>
-                <div style="margin-bottom: 20px">
-                    <div>Assigee Id</div>
-                    <select name="asigneeid" style="width: 100%;">
-                    </select>
-                </div>
-                <div style="padding-top: 25px; justify-content: center; align-items: center; display: flex;">
-                    <input type="button" name="" value="Submit" style="width: 100%; padding: 5px; margin: 5px" />
-                    <input type="button" name="" value="Cancel" style="width: 100%; padding: 5px; margin: 5px" />
-                </div>
-            </form>
-        </div>
-        <script>
-            $(document).ready(function () {
-                $.ajax({
-                    type: "Get",
-                    url: "../API/User/all",
-                    success: function (data) {
-                        JSON.parse(JSON.parse(data)).forEach(
-                            row =>
-                                $('#asigneeid').append(`<option value="${row.id}">
-                                                                ${row.email}
-                                                            </option>`)
-                        )
-                    },
-                    contentType: "application/json; charset=utf-8",
-                    datatype: 'json'
-                });
+        function submitDetailForm() {
+            $.ajax({
+                type: "PUT",
+                url: "../API/Card/" + document.getElementById("cardDetailID").value,
+                data: JSON.stringify({
+                    id: document.getElementById("cardDetailID").value,
+                    title: document.getElementById("cardDetailTitle").value,
+                    description: document.getElementById("cardDetailDescription").value,
+                    status: parseInt(document.getElementById("cardDetailStatus").value),
+                    position: document.getElementById("cardDetailPosition").value,
+                    asigneeId: document.getElementById("cardDetailAsigneeId").value
+                }),
+                contentType: "application/json; charset=utf-8",
+                datatype: 'json'
             });
-        </script>
-    </div>
 
+            hideDetailForm();
+        }
+    </script>
 
 
     <!--NEW FORM-->
@@ -330,7 +332,7 @@
                         <option value="3">Done</option>
                     </select>
                 </div>
-                
+
                 <div style="padding-top: 25px; justify-content: center; align-items: center; display: flex;">
                     <input type="button" name="" onclick="submitNewForm();" value="Submit" style="width: 100%; padding: 5px; margin: 5px" />
                     <input type="button" name="" onclick="hideNewForm();" value="Cancel" style="width: 100%; padding: 5px; margin: 5px" />
@@ -350,7 +352,6 @@
 
         function hideNewForm() {
             document.getElementById("newCardForm").style.display = "none";
-            document.getElementById("cardDetailsForm").style.display = "none";
         }
 
         function submitNewForm() {
@@ -376,7 +377,7 @@
                             status: parseInt(selStatus),
                             asigneeId: newCard.asigneeId
                         }),
-                  //      success: function (data) { alert("PUT was performed." + data) },
+                        //      success: function (data) { alert("PUT was performed." + data) },
                         contentType: "application/json; charset=utf-8",
                         datatype: 'json'
                     });
@@ -389,7 +390,7 @@
 
             hideNewForm();
 
-               
+
 
         }
 
