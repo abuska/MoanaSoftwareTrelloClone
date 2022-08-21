@@ -1,6 +1,6 @@
 ﻿@using TrelloClone.Services;
 
-<body style="background-image: linear-gradient(70deg, #7c52d1, #e060ad); ">
+<body style="background-image: linear-gradient(70deg, #7c52d1, #e060ad); " onload="init();">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 
@@ -10,6 +10,9 @@
 
     <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js"></script>
+
     @{
         ViewData["Title"] = "Dashboard";
 
@@ -17,47 +20,18 @@
         list.Sort((x, y) => x.position.CompareTo(y.position));
     }
 
-    <h1>Dashboard</h1>
 
-
-    <script>
-        function detailsCardModalPopUpToggle(_id) {
-
-            alert(_id);
-            $.get("ajax/test.html", function (data) {
-                $(".result").html(data);
-                alert("Load was performed.");
-            });
-            if (document.getElementById("detailsModalwindow").style.display != "flex") {
-                document.getElementById("detailsModalwindow").style.display = "flex";
-            } else {
-                document.getElementById("detailsModalwindow").style.display = "none";
-            }
-        }
-    </script>
-
-    <script>
-        function deleteCardModalPopUpToggle(_id) {
-
-
-
-            if (document.getElementById("deleteModalwindow").style.display != "flex") {
-                document.getElementById("deleteModalwindow").style.display = "flex";
-            } else {
-                document.getElementById("deleteModalwindow").style.display = "none";
-            }
-        }
-    </script>
-
-    <div style=" display: flex; justify-content: space-between;">
+    <div style=" display: flex; justify-content: space-between;" id="dragparentparent">
         <div style="background-color: #d1d1d1; width: 24%; padding: 10px; border-radius: 10px; height: fit-content; ">
             <h3 style="padding: 5px; font-size: 20px; color: #3d3d3d;">
                 Pending
             </h3>
-            @foreach (Card card in list.FindAll(e => e.status == 0))
-            {
-                <partial name="_Card.cshtml" model="card" />
-            }
+            <div id="dragparent0" style="min-height:50px;">
+                @foreach (Card card in list.FindAll(e => e.status == 0))
+                {
+                    <partial name="_Card.cshtml" model="card" />
+                }
+            </div>
             <div style="padding: 5px">
                 <input onclick="prepareNewForm(0);" type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
             </div>
@@ -67,10 +41,12 @@
             <h3 style="padding: 5px; font-size: 20px; color: #3d3d3d;">
                 In progress
             </h3>
-            @foreach (Card card in list.FindAll(e => e.status == 1))
-            {
-                <partial name="_Card.cshtml" model="card" />
-            }
+            <div id="dragparent1" style="min-height:50px;">
+                @foreach (Card card in list.FindAll(e => e.status == 1))
+                {
+                    <partial name="_Card.cshtml" model="card" />
+                }
+            </div>
             <div style="padding: 5px">
                 <input onclick="prepareNewForm(1);" type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
             </div>
@@ -79,22 +55,27 @@
             <h3 style="padding: 5px; font-size: 20px; color: #3d3d3d;">
                 Blocked
             </h3>
-            @foreach (Card card in list.FindAll(e => e.status == 2))
-            {
-                <partial name="_Card.cshtml" model="card" />
-            }
+            <div id="dragparent2" style="min-height:50px;">
+                @foreach (Card card in list.FindAll(e => e.status == 2))
+                {
+                    <partial name="_Card.cshtml" model="card" />
+                }
+            </div>
             <div style="padding: 5px">
                 <input onclick="prepareNewForm(2);" type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
             </div>
         </div>
         <div style="background-color: #d1d1d1; width: 24%; padding: 10px; border-radius: 10px; height: fit-content; ">
+
             <h3 style="padding: 5px; font-size: 20px; color: #3d3d3d;">
                 Done
             </h3>
-            @foreach (Card card in list.FindAll(e => e.status == 3))
-            {
-                <partial name="_Card.cshtml" model="card" />
-            }
+            <div id="dragparent3" style="min-height:50px;">
+                @foreach (Card card in list.FindAll(e => e.status == 3))
+                {
+                    <partial name="_Card.cshtml" model="card" />
+                }
+            </div>
             <div style="padding: 5px">
                 <input onclick="prepareNewForm(3);" type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
             </div>
@@ -113,14 +94,47 @@
                     JSON.parse(JSON.parse(data)).forEach(
                         row =>
                             $('#cardDetailAsigneeId').append(`<option value="${row.id}">
-                                                           ${row.email}
-                                                      </option>`)
+                                                                   ${row.email}
+                                                              </option>`)
                     )
                 },
                 contentType: "application/json; charset=utf-8",
                 datatype: 'json'
             });
+
+
         });
+
+        function init() {
+            dragula([
+                document.querySelector("#dragparent0"),
+                document.querySelector("#dragparent1"),
+                document.querySelector("#dragparent2"),
+                document.querySelector("#dragparent3")])
+                .on('drop', function (el, target, source, sibling) {
+                    var cardID = el.getAttribute('data-id').split("'")[1];
+                    console.log(cardID);
+                    $.get("../API/Card/" + cardID, function (data) {
+                        var CardData = JSON.parse(data);
+
+                        $.ajax({
+                            type: "PUT",
+                            url: "../API/Card/" + CardData.id,
+                            data: JSON.stringify({
+                                id: CardData.id,
+                                title: CardData.title,
+                                description: CardData.description,
+                                status: parseInt(target.getAttribute('id').split("dragparent")[1]),
+                                position: CardData.position,
+                                asigneeId: CardData.asigneeId
+                            }),
+                            contentType: "application/json; charset=utf-8",
+                            datatype: 'json'
+                            });
+
+                    });
+                });
+        }
     </script>
 
 
@@ -148,7 +162,7 @@
                 </div>
                 <div style="margin-bottom: 20px; width: 100%;">
                     <div>Status</div>
-                    <select name="status"id="cardDetailStatus">
+                    <select name="status" id="cardDetailStatus">
                         <option value="0">Pending</option>
                         <option value="1">In Progress</option>
                         <option value="2">Blocked</option>
@@ -167,7 +181,7 @@
                 <div style="padding-top: 25px; justify-content: center; align-items: center; display: flex;">
                     <input type="button" name="" onclick="submitDetailForm();" value="Submit" style="width: 100%; padding: 5px; margin: 5px" />
                     <input type="button" name="" onclick="hideDetailForm();" value="Cancel" style="width: 100%; padding: 5px; margin: 5px" />
-                   <input type="button" name="" onclick="deleteDetail();" value="DELETE" style="width: 100%; padding: 5px; margin: 5px; background-color:red;" />
+                    <input type="button" name="" onclick="deleteDetail();" value="DELETE" style="width: 100%; padding: 5px; margin: 5px; background-color:red;" />
                 </div>
             </form>
         </div>
@@ -180,8 +194,8 @@
                         JSON.parse(JSON.parse(data)).forEach(
                             row =>
                                 $('#asigneeid').append(`<option value="${row.id}">
-                                                                        ${row.email}
-                                                                    </option>`)
+                                                                                        ${row.email}
+                                                                                    </option>`)
                         )
                     },
                     contentType: "application/json; charset=utf-8",
