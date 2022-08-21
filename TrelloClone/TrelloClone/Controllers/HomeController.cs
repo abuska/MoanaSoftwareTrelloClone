@@ -32,7 +32,14 @@ namespace TrelloClone.Controllers
 
                 UserAuthController userAuthController = new UserAuthController();
                 userAuthController.LoginUser(email, password);
-  
+
+                if (MyAppContext.getUserData() == null)
+                {
+                    return View();
+                }
+ 
+
+
                 if (MyAppContext.getUserData().token != null)
                 {
                     CardController cc = new CardController();
@@ -49,10 +56,22 @@ namespace TrelloClone.Controllers
 
         public IActionResult Registration(UserRegData _userRegData)
         {
+
+            if(_userRegData.email==null||
+                _userRegData.password==null||
+                _userRegData.passwordConfirm==null||
+                _userRegData.password != _userRegData.passwordConfirm)
+            {
+                ViewData["RegSuccess"] = "";
+                return View();
+            }
+
+
             //TODO proper error messages 
             string email = _userRegData.email;
             string password = _userRegData.password;
             string passwordConfirm = _userRegData.passwordConfirm;
+
 
             
             UserAuthController userAuthController = new UserAuthController();

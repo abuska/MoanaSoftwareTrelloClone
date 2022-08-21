@@ -26,10 +26,13 @@ namespace TrelloClone.Controllers
             var endpoint = new Uri("http://79.172.201.168/Authentication/SignIn");
             var userLoginRequest = JsonConvert.SerializeObject(_userLoginData);
             var payLoad = new StringContent(content:userLoginRequest, encoding:Encoding.UTF8, mediaType:"application/json");
-            var result = client.PostAsync(endpoint, payLoad).Result.Content.ReadAsStringAsync().Result;
-
-            currentUser = JsonConvert.DeserializeObject<User>(result);
-            MyAppContext.setUserData(currentUser);
+            var response = client.PostAsync(endpoint, payLoad).Result;
+            var result = response.Content.ReadAsStringAsync().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                currentUser = JsonConvert.DeserializeObject<User>(result);
+                MyAppContext.setUserData(currentUser);
+            }
         }
 
         public string RegistrationUser(string _email, string _password)
