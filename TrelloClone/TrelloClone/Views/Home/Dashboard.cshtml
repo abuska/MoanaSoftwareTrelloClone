@@ -1,213 +1,223 @@
 ﻿@using TrelloClone.Services;
 
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="~/css/site.css" />
+<body style="background-image: linear-gradient(70deg, #7c52d1, #e060ad); ">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 
-<script src="/lib/jquery/dist/jquery.min.js"></script>
-<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0"></script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0"></script>
 
-<script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-@{
-    ViewData["Title"] = "Dashboard";
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @{
+        ViewData["Title"] = "Dashboard";
 
-    var list = MyAppContext.getCardList();
-    list.Sort((x, y) => x.position.CompareTo(y.position));
-}
-
-<h1>Dashboard</h1>
-
-<button onclick="GetAll()">GetAll</button>
-<button onclick="Get1()">Get1</button>
-<button onclick="Add()">Add</button>
-<button onclick="Update()">Update</button>
-<button onclick="Delete()">Delete</button>
-<button onclick="CurrentUser()">User</button>
-<button onclick="AllUsers()">AllUsers</button>
-<script>
-    function GetAll() {
-        $.get("../API/Card", function (data) {
-
-            alert("GETALL was performed." + data);
-        });
+        var list = MyAppContext.getCardList();
+        list.Sort((x, y) => x.position.CompareTo(y.position));
     }
 
-    function Get1() {
-        $.get("../API/Card/9d52138b-e0d1-400e-bfc4-154f0ece6a3d", function (data) {
-            alert("GET1 was performed." + data);
-        });
-    }
-    function Add() {
-        $.ajax({
-            type: "POST",
-            url: "../API/Card",
-            data: JSON.stringify({ title: "test_title", description: "test_desc" }),
-            success: function (datae) { alert("POST was performed." + datae) },
-            contentType: "application/json; charset=utf-8",
-            datatype: 'json'
-        });
-    }
-    function Update() {
-        $.ajax({
-            type: "PUT",
-            url: "../API/Card/" + "ed893e2f-6458-41c0-9561-78b287432fdd",
-            data: JSON.stringify({
-                id: "ed893e2f-6458-41c0-9561-78b287432fdd",
-                title: "title_update3",
-                description: "description_update3",
-                position: 3,
-                status: 3,
-                asigneeId: "2fd10c06-fef3-4378-b6c2-dda1d89eef04"
-            }),
-            success: function (data) { alert("PUT was performed." + data) },
-            contentType: "application/json; charset=utf-8",
-            datatype: 'json'
-        });
-    }
-    function Delete() {
-        $.ajax({
-            type: "DELETE",
-            url: "../API/Card/" + "6690fd50-a662-41dd-9305-cfe243a88848",
-            success: function (data) { alert("delete was performed." + data) },
-            contentType: "application/json; charset=utf-8",
-            datatype: 'json'
-        });
-    }
-    function CurrentUser() {
-        $.ajax({
-            type: "Get",
-            url: "../API/User/",
-            success: function (data) { alert("getCurrentUser was performed." + data) },
-            contentType: "application/json; charset=utf-8",
-            datatype: 'json'
-        });
-    }
-    function AllUsers() {
-        $.ajax({
-            type: "Get",
-            url: "../API/User/all",
-            success: function (data) { alert("getAllUsers was performed." + data) },
-            contentType: "application/json; charset=utf-8",
-            datatype: 'json'
-        });
-    }
+    <h1>Dashboard</h1>
 
-</script>
+    <button onclick="GetAll()">GetAll</button>
+    <button onclick="Get1()">Get1</button>
+    <button onclick="Add()">Add</button>
+    <button onclick="Update()">Update</button>
+    <button onclick="Delete()">Delete</button>
+    <button onclick="CurrentUser()">User</button>
+    <button onclick="AllUsers()">AllUsers</button>
+    <script>
+        function GetAll() {
+            $.get("../API/Card", function (data) {
 
-
-
-<script>
-    function detailsCardModalPopUpToggle(_id) {
-
-        alert(_id);
-        $.get("ajax/test.html", function (data) {
-            $(".result").html(data);
-            alert("Load was performed.");
-        });
-        if (document.getElementById("detailsModalwindow").style.display != "flex") {
-            document.getElementById("detailsModalwindow").style.display = "flex";
-        } else {
-            document.getElementById("detailsModalwindow").style.display = "none";
+                alert("GETALL was performed." + data);
+            });
         }
-    }
-</script>
 
-<script>
-    function deleteCardModalPopUpToggle(_id) {
-
-
-
-        if (document.getElementById("deleteModalwindow").style.display != "flex") {
-            document.getElementById("deleteModalwindow").style.display = "flex";
-        } else {
-            document.getElementById("deleteModalwindow").style.display = "none";
+        function Get1() {
+            $.get("../API/Card/9d52138b-e0d1-400e-bfc4-154f0ece6a3d", function (data) {
+                alert("GET1 was performed." + data);
+            });
         }
-    }
-</script>
-
-<div style="padding: 1em">
-    <input type="button" name="newCardBtn" value="newCard" />
-</div>
-
-<div style=" display: flex; justify-content: space-between;">
-    <div style="background-color: grey; width: 20%; padding: 1em; border-radius: 10px ">
-        <h3>
-            pending
-        </h3>
-        @foreach (Card card in list.FindAll(e => e.status == 0))
-        {
-            <partial name="_Card.cshtml" model="card" />
+        function Add() {
+            $.ajax({
+                type: "POST",
+                url: "../API/Card",
+                data: JSON.stringify({ title: "test_title", description: "test_desc" }),
+                success: function (datae) { alert("POST was performed." + datae) },
+                contentType: "application/json; charset=utf-8",
+                datatype: 'json'
+            });
         }
+        function Update() {
+            $.ajax({
+                type: "PUT",
+                url: "../API/Card/" + "ed893e2f-6458-41c0-9561-78b287432fdd",
+                data: JSON.stringify({
+                    id: "ed893e2f-6458-41c0-9561-78b287432fdd",
+                    title: "title_update3",
+                    description: "description_update3",
+                    position: 3,
+                    status: 3,
+                    asigneeId: "2fd10c06-fef3-4378-b6c2-dda1d89eef04"
+                }),
+                success: function (data) { alert("PUT was performed." + data) },
+                contentType: "application/json; charset=utf-8",
+                datatype: 'json'
+            });
+        }
+        function Delete() {
+            $.ajax({
+                type: "DELETE",
+                url: "../API/Card/" + "6690fd50-a662-41dd-9305-cfe243a88848",
+                success: function (data) { alert("delete was performed." + data) },
+                contentType: "application/json; charset=utf-8",
+                datatype: 'json'
+            });
+        }
+        function CurrentUser() {
+            $.ajax({
+                type: "Get",
+                url: "../API/User/",
+                success: function (data) { alert("getCurrentUser was performed." + data) },
+                contentType: "application/json; charset=utf-8",
+                datatype: 'json'
+            });
+        }
+        function AllUsers() {
+            $.ajax({
+                type: "Get",
+                url: "../API/User/all",
+                success: function (data) { alert("getAllUsers was performed." + data) },
+                contentType: "application/json; charset=utf-8",
+                datatype: 'json'
+            });
+        }
+
+    </script>
+
+
+
+    <script>
+        function detailsCardModalPopUpToggle(_id) {
+
+            alert(_id);
+            $.get("ajax/test.html", function (data) {
+                $(".result").html(data);
+                alert("Load was performed.");
+            });
+            if (document.getElementById("detailsModalwindow").style.display != "flex") {
+                document.getElementById("detailsModalwindow").style.display = "flex";
+            } else {
+                document.getElementById("detailsModalwindow").style.display = "none";
+            }
+        }
+    </script>
+
+    <script>
+        function deleteCardModalPopUpToggle(_id) {
+
+
+
+            if (document.getElementById("deleteModalwindow").style.display != "flex") {
+                document.getElementById("deleteModalwindow").style.display = "flex";
+            } else {
+                document.getElementById("deleteModalwindow").style.display = "none";
+            }
+        }
+    </script>
+
+    <div style=" display: flex; justify-content: space-between;">
+        <div style="background-color: #d1d1d1; width: 24%; padding: 10px; border-radius: 10px; height: fit-content; ">
+            <h3 style="padding: 5px; font-size: 20px; color: #3d3d3d;">
+                Pending
+            </h3>
+            @foreach (Card card in list.FindAll(e => e.status == 0))
+            {
+                <partial name="_Card.cshtml" model="card" />
+            }
+            <div style="padding: 5px">
+                <input type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
+            </div>
+        </div>
+
+        <div style="background-color: #d1d1d1; width: 24%; padding: 10px; border-radius: 10px; height: fit-content; ">
+            <h3 style="padding: 5px; font-size: 20px; color: #3d3d3d;">
+                In progress
+            </h3>
+            @foreach (Card card in list.FindAll(e => e.status == 1))
+            {
+                <partial name="_Card.cshtml" model="card" />
+            }
+            <div style="padding: 5px">
+                <input type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
+            </div>
+        </div>
+        <div style="background-color: #d1d1d1; width: 24%; padding: 10px; border-radius: 10px; height: fit-content; ">
+            <h3 style="padding: 5px; font-size: 20px; color: #3d3d3d;">
+                Blocked
+            </h3>
+            @foreach (Card card in list.FindAll(e => e.status == 2))
+            {
+                <partial name="_Card.cshtml" model="card" />
+            }
+            <div style="padding: 5px">
+                <input type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
+            </div>
+        </div>
+        <div style="background-color: #d1d1d1; width: 24%; padding: 10px; border-radius: 10px; height: fit-content; ">
+            <h3 style="padding: 5px; font-size: 20px; color: #3d3d3d;">
+                Done
+            </h3>
+            @foreach (Card card in list.FindAll(e => e.status == 3))
+            {
+                <partial name="_Card.cshtml" model="card" />
+            }
+            <div style="padding: 5px">
+                <input type="button" name="newCardBtn" value="+ Add new card" style="background: transparent; border-style: none;" />
+            </div>
+        </div>
+
     </div>
 
-    <div style="background-color: grey; width: 20%; padding: 1em; border-radius: 10px ">
-        <h3>
-            In progress
-        </h3>
-        @foreach (Card card in list.FindAll(e => e.status == 1))
-        {
-            <partial name="_Card.cshtml" model="card" />
-        }
-    </div>
-    <div style="background-color: grey; width: 20%; padding: 1em; border-radius: 10px ">
-        <h3>
-            Blocked
-        </h3>
-        @foreach (Card card in list.FindAll(e => e.status == 2))
-        {
-            <partial name="_Card.cshtml" model="card" />
-        }
-    </div>
-    <div style="background-color: grey; width: 20%; padding: 1em; border-radius: 10px ">
-        <h3>
-            Done
-        </h3>
-        @foreach (Card card in list.FindAll(e => e.status == 3))
-        {
-            <partial name="_Card.cshtml" model="card" />
-        }
-    </div>
 
-</div>
-
-
-<form>
-    <input type="hidden" name="id" value="" />
-    <input type="text" name="title" value="" />
-    <input type="text" name="description" value="" />
-    <select name="status" id="statuses">
-        <option value="0">Pending</option>
-        <option value="1">In Progress</option>
-        <option value="2">Blocked</option>
-        <option value="3">Done</option>
-    </select>
-    <input type="number" name="position" value="" />
-    <select name="asigneeid" id="asigneeid" >
-    </select>
-    <input type="button" name="" value="Submit" />
-</form>
-<script>
-    $(document).ready(function () {
-        $.ajax({
-            type: "Get",
-            url: "../API/User/all",
-            success: function (data) {
-                JSON.parse(JSON.parse(data)).forEach(
-                    row =>
-                        $('#asigneeid').append(`<option value="${row.id}">
-                                       ${row.email}
-                                  </option>`)
-                )
-            },
-            contentType: "application/json; charset=utf-8",
-            datatype: 'json'
+    <form>
+        <input type="hidden" name="id" value="" />
+        <input type="text" name="title" value="" />
+        <input type="text" name="description" value="" />
+        <select name="status" id="statuses">
+            <option value="0">Pending</option>
+            <option value="1">In Progress</option>
+            <option value="2">Blocked</option>
+            <option value="3">Done</option>
+        </select>
+        <input type="number" name="position" value="" />
+        <select name="asigneeid" id="asigneeid">
+        </select>
+        <input type="button" name="" value="Submit" />
+    </form>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "Get",
+                url: "../API/User/all",
+                success: function (data) {
+                    JSON.parse(JSON.parse(data)).forEach(
+                        row =>
+                            $('#asigneeid').append(`<option value="${row.id}">
+                                           ${row.email}
+                                      </option>`)
+                    )
+                },
+                contentType: "application/json; charset=utf-8",
+                datatype: 'json'
+            });
         });
-    });
-</script>
+    </script>
 
-<div id="detailsModalwindow" style="display: none">
+    <div id="detailsModalwindow" style="display: none">
 
 
-</div>
-<div id="deleteModalwindow" style="display: none">this</div>
+    </div>
+    <div id="deleteModalwindow" style="display: none">this</div>
+    </body>
