@@ -1,51 +1,91 @@
-﻿
-
-
-@using TrelloClone.Services;
-
-
+﻿@using TrelloClone.Services;
 
 @{
     ViewData["Title"] = "Dashboard";
-    MyAppContext.getCardList();
+    var list = MyAppContext.getCardList();
+    list.Sort((x, y) => x.position.CompareTo(y.position));
 }
 
 <h1>Dashboard</h1>
-<div style=" flex-direction: row;">
-    <div style="background-color:grey;">
-        <h3>
-            0 pending
-        </h3>
-        @foreach (Card card in MyAppContext.getCardList().FindAll(e => e.status == 0))
-        {
-            <div>@card.id</div>
+
+<script>
+    function detailsCardModalPopUpToggle(_id) {
+
+        alert(_id);
+        $.get("ajax/test.html", function (data) {
+            $(".result").html(data);
+            alert("Load was performed.");
+        });
+        if (document.getElementById("detailsModalwindow").style.display != "flex") {
+            document.getElementById("detailsModalwindow").style.display = "flex";
+        } else {
+            document.getElementById("detailsModalwindow").style.display = "none";
         }
-    </div>
-    <div style="background-color:grey;">
-        <h3>
-            1 in progress
-        </h3>
-        @foreach (Card card in MyAppContext.getCardList().FindAll(e => e.status == 1))
-        {
-            <div>@card.id</div>
+    }
+</script>
+
+<script>
+    function deleteCardModalPopUpToggle(_id) {
+
+
+
+        if (document.getElementById("deleteModalwindow").style.display != "flex") {
+            document.getElementById("deleteModalwindow").style.display = "flex";
+        } else {
+            document.getElementById("deleteModalwindow").style.display = "none";
         }
-    </div>
-    <div style="background-color:grey;">
-        <h3>
-            2 blocked
-        </h3>
-        @foreach (Card card in MyAppContext.getCardList().FindAll(e => e.status == 2))
-        {
-            <div>@card.id</div>
-        }
-    </div>
-    <div style="background-color:grey;">
-        <h3>
-            3 done
-        </h3>
-        @foreach (Card card in MyAppContext.getCardList().FindAll(e => e.status == 3))
-        {
-            <div>@card.id</div>
-        }
-    </div>
+    }
+</script>
+
+<div style="padding: 1em">
+    <input type="button" name="newCardBtn" value="newCard" />
 </div>
+
+<div style=" display: flex; justify-content: space-between;">
+    <div style="background-color: grey; width: 20%; padding: 1em; border-radius: 10px ">
+        <h3>
+            pending
+        </h3>
+        @foreach (Card card in list.FindAll(e => e.status == 0))
+        {
+            <partial name="_Card.cshtml" model="card" />
+        }
+    </div>
+
+    <div style="background-color: grey; width: 20%; padding: 1em; border-radius: 10px ">
+        <h3>
+            In progress
+        </h3>
+        @foreach (Card card in list.FindAll(e => e.status == 1))
+        {
+            <partial name="_Card.cshtml" model="card" />
+        }
+    </div>
+    <div style="background-color: grey; width: 20%; padding: 1em; border-radius: 10px ">
+        <h3>
+            Blocked
+        </h3>
+        @foreach (Card card in list.FindAll(e => e.status == 2))
+        {
+            <partial name="_Card.cshtml" model="card" />
+        }
+    </div>
+    <div style="background-color: grey; width: 20%; padding: 1em; border-radius: 10px ">
+        <h3>
+            Done
+        </h3>
+        @foreach (Card card in list.FindAll(e => e.status == 3))
+        {
+            <partial name="_Card.cshtml" model="card" />
+        }
+    </div>
+
+</div>
+
+
+
+<div id="detailsModalwindow" style="display: none">
+
+
+</div>
+<div id="deleteModalwindow" style="display: none">this</div>

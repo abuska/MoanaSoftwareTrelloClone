@@ -156,3 +156,6 @@ C:\Users\Tóth Péter\Desktop\Eby's shit\Git\MoanaSoftwareTrelloClone\TrelloClon
 C:\Users\Tóth Péter\Desktop\Eby's shit\Git\MoanaSoftwareTrelloClone\TrelloClone\TrelloClone\obj\Debug\net5.0\Razor\Views\Home\Registration.cshtml.g.cs
 C:\Users\Tóth Péter\Desktop\Eby's shit\Git\MoanaSoftwareTrelloClone\TrelloClone\TrelloClone\obj\Debug\net5.0\Razor\Views\Home\Login.cshtml.g.cs
 C:\Users\Tóth Péter\Desktop\Eby's shit\Git\MoanaSoftwareTrelloClone\TrelloClone\TrelloClone\obj\Debug\net5.0\Razor\Views\Home\Dashboard.cshtml.g.cs
+C:\Users\Tóth Péter\Desktop\Eby's shit\Git\MoanaSoftwareTrelloClone\TrelloClone\TrelloClone\bin\Debug\net5.0\System.Net.Http.Formatting.dll
+C:\Users\Tóth Péter\Desktop\Eby's shit\Git\MoanaSoftwareTrelloClone\TrelloClone\TrelloClone\bin\Debug\net5.0\System.Web.Http.dll
+C:\Users\Tóth Péter\Desktop\Eby's shit\Git\MoanaSoftwareTrelloClone\TrelloClone\TrelloClone\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
